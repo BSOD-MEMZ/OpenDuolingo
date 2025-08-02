@@ -61,9 +61,6 @@
     <family>Microsoft YaHei UI</family>
    </font>
   </property>
-  <property name="windowTitle">
-   <string>OpenDuolingo</string>
-  </property>
   <widget class="QPushButton" name="option_button_1">
    <property name="geometry">
     <rect>

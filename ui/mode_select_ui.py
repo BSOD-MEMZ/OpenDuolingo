@@ -117,9 +117,9 @@ class Ui_Form(object):
     # setupUi
 
     def retranslateUi(self, Form):
-        Form.setWindowTitle(QCoreApplication.translate("Form", u"Form", None))
         self.label_5.setText(QCoreApplication.translate("Form", u"<html><head/><body><p><span style=\" color:#4b4b4b;\"><b>\u8bf7\u9009\u62e9\u6a21\u5f0f</b></span></p></body></html>", None))
         self.hiragana.setText(QCoreApplication.translate("Form", u"\u5e73\u4eee\u540d", None))
         self.katakana.setText(QCoreApplication.translate("Form", u"\u7247\u4eee\u540d", None))
+        pass
     # retranslateUi
 

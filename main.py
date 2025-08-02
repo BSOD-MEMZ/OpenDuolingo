@@ -32,7 +32,7 @@ class App(main_ui.Ui_Form):
             self.option_button_4,
         )
         for i in range(4):
-            self.buttons[i].clicked.connect(partial(self.select, i))
+            self.buttons[i].clicked.connect(partial(self.on_select, i))
         self.continue_button.clicked.connect(self.next)
 
         # 隐藏组件
@@ -63,69 +63,76 @@ class App(main_ui.Ui_Form):
         )
 
     def create_problem(self):
-        app.continue_button.setStyleSheet(style.button_green)
-        app.judgement_frame.setStyleSheet("background-color: #FFFFFF;")
-        app.judgement_label.hide()
-        app.answer_label.hide()
-        print("creating")
-        app.continue_button.setText("检查")
-        self.answer = random.randint(0, 3)
-        self.problem = random.sample(kana_list, 4)
-        for i in range(4):
-            app.buttons[i].setText(self.problem[i][self.mode])
-            app.buttons[i].setChecked(False)
-            app.buttons[i].setEnabled(True)
-            if i == self.answer:
-                app.problem_label.setText(self.problem[i]["romaji"])
-                self.current_correct_kana = self.problem[i][self.mode]
-        self.selected = -1
-        app.continue_button.setDisabled(True)
+        """出题"""
+        self.continue_button.setStyleSheet(style.button_green)
+        self.judgement_frame.setStyleSheet("background-color: #FFFFFF;")
+        self.judgement_label.hide()
+        self.answer_label.hide()
 
-    def select(self, order: int):
+        print("creating")
+        self.answer = random.randint(0, 3)
+        problems = random.sample(kana_list, 4)
+        for i in range(4):
+            button = self.buttons[i]
+            button.setText(problems[i][self.mode])
+            button.setChecked(False)
+            button.setEnabled(True)
+            if i == self.answer:
+                self.problem_label.setText(problems[i]["romaji"])
+                self.answer_text = problems[i][self.mode]
+
+        self.selected = -1
+        self.continue_button.setText("检查")
+        self.continue_button.setDisabled(True)
+
+    def on_select(self, order: int):
+        """按钮选中事件"""
         print(f"selected {order}")
         for i in range(4):
             if i != order:
-                app.buttons[i].setChecked(False)
+                self.buttons[i].setChecked(False)
         self.selected = order
-        app.continue_button.setEnabled(True)
+        self.continue_button.setEnabled(True)
 
     def judge(self):
+        """判题"""
         print("judging")
 
         # 禁用按钮点击
         for i in range(4):
-            app.buttons[i].setEnabled(False)
+            self.buttons[i].setEnabled(False)
 
         print(f"{self.selected=}, {self.answer=}")
 
         # 判断答案
         if self.selected == self.answer:
             print("correct")
-            app.judgement_frame.setStyleSheet("background-color: #D7FFB8;")
-            app.judgement_label.setText("<span style='color:#58a700;'>正确！</span>")
-            app.judgement_label.show()
+            self.judgement_frame.setStyleSheet("background-color: #D7FFB8;")
+            self.judgement_label.setText("<span style='color:#58a700;'>正确！</span>")
+            self.judgement_label.show()
             self.combo += 1
             if self.combo >= 10:
                 ...  # TODO
             self.se_correct.play()
         else:
             print("incorrect")
-            app.judgement_frame.setStyleSheet("background-color: #FFDFE0;")
-            app.judgement_label.setText(
+            self.judgement_frame.setStyleSheet("background-color: #FFDFE0;")
+            self.judgement_label.setText(
                 "<span style='color:#ED2B2B;'>铸币吧怎么这么菜啊</span>"
             )
-            app.judgement_label.show()
-            app.answer_label.setText(
-                f"<span style='color:#EA2B2B;'>{self.current_correct_kana}</span>"
+            self.judgement_label.show()
+            self.answer_label.setText(
+                f"<span style='color:#EA2B2B;'>{self.answer_text}</span>"
             )
-            app.answer_label.show()
-            app.continue_button.setStyleSheet(style.button_red)
+            self.answer_label.show()
+            self.continue_button.setStyleSheet(style.button_red)
             self.combo = 0
             self.se_incorrect.play()
-        app.combo_label.setText(f"{self.combo} Combo")
-        app.continue_button.setText("继续")
+        self.combo_label.setText(f"{self.combo} Combo")
+        self.continue_button.setText("继续")
 
     def next(self):
+        """下一步操作，适用于 continue_button"""
         match self.next_action:
             case "judge":
                 self.judge()
@@ -139,8 +146,12 @@ application = QApplication(sys.argv)
 application.styleHints().setColorScheme(Qt.ColorScheme.Light)
 
 window = QMainWindow()
+window.setWindowTitle("Openlingo")
+window.setFixedSize(580, 440)
+
 app = App()
 app.setupUi(window)
+
 window.show()
 
 sys.exit(application.exec())

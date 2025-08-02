@@ -286,7 +286,6 @@ class Ui_Form(object):
     # setupUi
 
     def retranslateUi(self, Form):
-        Form.setWindowTitle(QCoreApplication.translate("Form", u"OpenDuolingo", None))
         self.option_button_1.setText(QCoreApplication.translate("Form", u"\u3042", None))
         self.hint_labell.setText(QCoreApplication.translate("Form", u"<html><head/><body><p><span style=\" color:#3c3c3c;\"><b>\u9009\u62e9\u6b63\u786e\u7684\u5047\u540d</b></span></p></body></html>", None))
         self.problem_label.setText(QCoreApplication.translate("Form", u"a", None))
@@ -297,5 +296,6 @@ class Ui_Form(object):
         self.option_button_2.setText(QCoreApplication.translate("Form", u"\u3042", None))
         self.option_button_3.setText(QCoreApplication.translate("Form", u"\u3042", None))
         self.option_button_4.setText(QCoreApplication.translate("Form", u"\u3042", None))
+        pass
     # retranslateUi
 
