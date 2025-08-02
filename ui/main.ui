@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>580</width>
-    <height>440</height>
+    <width>584</width>
+    <height>445</height>
    </rect>
   </property>
   <property name="palette">
@@ -78,6 +78,9 @@
      <family>Yu Gothic</family>
      <pointsize>36</pointsize>
     </font>
+   </property>
+   <property name="cursor">
+    <cursorShape>PointingHandCursor</cursorShape>
    </property>
    <property name="styleSheet">
     <string notr="true">QPushButton {
@@ -196,10 +199,10 @@ QPushButton:checked{
 }</string>
    </property>
    <property name="frameShape">
-    <enum>QFrame::StyledPanel</enum>
+    <enum>QFrame::Shape::StyledPanel</enum>
    </property>
    <property name="frameShadow">
-    <enum>QFrame::Raised</enum>
+    <enum>QFrame::Shadow::Raised</enum>
    </property>
    <widget class="QLabel" name="label_3">
     <property name="enabled">
@@ -239,6 +242,9 @@ QPushButton:checked{
       <pointsize>14</pointsize>
       <bold>true</bold>
      </font>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
     </property>
     <property name="styleSheet">
      <string notr="true">QPushButton {
@@ -299,7 +305,7 @@ QPushButton:disabled{
      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#EA2B2B;&quot;&gt;fuck&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
     <property name="alignment">
-     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+     <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
     </property>
    </widget>
   </widget>
@@ -317,6 +323,9 @@ QPushButton:disabled{
      <family>Yu Gothic</family>
      <pointsize>36</pointsize>
     </font>
+   </property>
+   <property name="cursor">
+    <cursorShape>PointingHandCursor</cursorShape>
    </property>
    <property name="styleSheet">
     <string notr="true">QPushButton {
@@ -375,6 +384,9 @@ QPushButton:checked{
      <pointsize>36</pointsize>
     </font>
    </property>
+   <property name="cursor">
+    <cursorShape>PointingHandCursor</cursorShape>
+   </property>
    <property name="styleSheet">
     <string notr="true">QPushButton {
     background-color: #FFFFFF;
@@ -432,6 +444,9 @@ QPushButton:checked{
      <pointsize>36</pointsize>
     </font>
    </property>
+   <property name="cursor">
+    <cursorShape>PointingHandCursor</cursorShape>
+   </property>
    <property name="styleSheet">
     <string notr="true">QPushButton {
     background-color: #FFFFFF;
@@ -473,163 +488,6 @@ QPushButton:checked{
    <property name="checkable">
     <bool>true</bool>
    </property>
-  </widget>
-  <widget class="QFrame" name="frame_2">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>580</width>
-     <height>440</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">QFrame{
-	background-color: rgba(255, 255, 255, 80%);
-}</string>
-   </property>
-   <property name="frameShape">
-    <enum>QFrame::NoFrame</enum>
-   </property>
-   <property name="frameShadow">
-    <enum>QFrame::Raised</enum>
-   </property>
-   <widget class="QFrame" name="frame_3">
-    <property name="geometry">
-     <rect>
-      <x>90</x>
-      <y>100</y>
-      <width>381</width>
-      <height>221</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">QFrame{
-	background-color: #FFFFFF;
-	border: 2px solid #E5E5E5;
-    padding: 10px;
-    border-radius: 16px;
-}</string>
-    </property>
-    <property name="frameShape">
-     <enum>QFrame::StyledPanel</enum>
-    </property>
-    <property name="frameShadow">
-     <enum>QFrame::Raised</enum>
-    </property>
-    <widget class="QLabel" name="label_5">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>10</y>
-       <width>300</width>
-       <height>50</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>Microsoft YaHei UI</family>
-       <pointsize>16</pointsize>
-       <bold>false</bold>
-      </font>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">border: none;
-background-color: none;</string>
-     </property>
-     <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#4b4b4b;&quot;&gt;&lt;b&gt;请选择模式&lt;/b&gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="hiragana">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>70</y>
-       <width>340</width>
-       <height>50</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>Yu Gothic</family>
-       <pointsize>14</pointsize>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">QPushButton {
-    background-color: #1CB0F6;
-    padding: 10px;
-    border-radius: 16px;
-	border-bottom: 4px solid #1899D6;
-    margin-bottom: 2px;
-	color: #FFFFFF
-}
-QPushButton:hover{
-    background-color: #1FC2FF;
-    padding: 10px;
-    border-radius: 16px;
-	border-bottom: 4px solid #1899D6;
-    margin-bottom: 2px;
-	color: #FFFFFF
-}
-QPushButton:pressed{
-    background-color: #1FC2FF;
-    padding: 10px;
-    border: none;
-	color: #FFFFFF
-}</string>
-     </property>
-     <property name="text">
-      <string>平仮名</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="katakana">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>140</y>
-       <width>340</width>
-       <height>50</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>Yu Gothic</family>
-       <pointsize>14</pointsize>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">QPushButton {
-    background-color: #1CB0F6;
-    padding: 10px;
-    border-radius: 16px;
-	border-bottom: 4px solid #1899D6;
-    margin-bottom: 2px;
-	color: #FFFFFF
-}
-QPushButton:hover{
-    background-color: #1FC2FF;
-    padding: 10px;
-    border-radius: 16px;
-	border-bottom: 4px solid #1899D6;
-    margin-bottom: 2px;
-	color: #FFFFFF
-}
-QPushButton:pressed{
-    background-color: #1FC2FF;
-    padding: 10px;
-    border: none;
-	color: #FFFFFF
-}</string>
-     </property>
-     <property name="text">
-      <string>片仮名</string>
-     </property>
-    </widget>
-   </widget>
   </widget>
  </widget>
  <resources/>

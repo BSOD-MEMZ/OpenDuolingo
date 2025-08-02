@@ -22,7 +22,7 @@ class Ui_Form(object):
     def setupUi(self, Form):
         if not Form.objectName():
             Form.setObjectName(u"Form")
-        Form.resize(580, 440)
+        Form.resize(584, 445)
         palette = QPalette()
         brush = QBrush(QColor(255, 255, 255, 255))
         brush.setStyle(Qt.BrushStyle.SolidPattern)
@@ -41,6 +41,7 @@ class Ui_Form(object):
         font1.setFamilies([u"Yu Gothic"])
         font1.setPointSize(36)
         self.pushButton.setFont(font1)
+        self.pushButton.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         self.pushButton.setStyleSheet(u"QPushButton {\n"
 "    background-color: #FFFFFF;\n"
 "    border: 2px solid #E5E5E5;\n"
@@ -105,8 +106,8 @@ class Ui_Form(object):
         self.frame.setStyleSheet(u"QFrame {\n"
 "	background-color: #FFFFFF;\n"
 "}")
-        self.frame.setFrameShape(QFrame.StyledPanel)
-        self.frame.setFrameShadow(QFrame.Raised)
+        self.frame.setFrameShape(QFrame.Shape.StyledPanel)
+        self.frame.setFrameShadow(QFrame.Shadow.Raised)
         self.label_3 = QLabel(self.frame)
         self.label_3.setObjectName(u"label_3")
         self.label_3.setEnabled(True)
@@ -120,6 +121,7 @@ class Ui_Form(object):
         font5.setPointSize(14)
         font5.setBold(True)
         self.continuebutton.setFont(font5)
+        self.continuebutton.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         self.continuebutton.setStyleSheet(u"QPushButton {\n"
 "    background-color: #58CC02;\n"
 "    padding: 10px;\n"
@@ -159,11 +161,12 @@ class Ui_Form(object):
         font6.setPointSize(12)
         font6.setBold(False)
         self.label_4.setFont(font6)
-        self.label_4.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignTop)
+        self.label_4.setAlignment(Qt.AlignmentFlag.AlignLeading|Qt.AlignmentFlag.AlignLeft|Qt.AlignmentFlag.AlignTop)
         self.pushButton_2 = QPushButton(Form)
         self.pushButton_2.setObjectName(u"pushButton_2")
         self.pushButton_2.setGeometry(QRect(160, 120, 120, 130))
         self.pushButton_2.setFont(font1)
+        self.pushButton_2.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         self.pushButton_2.setStyleSheet(u"QPushButton {\n"
 "    background-color: #FFFFFF;\n"
 "    border: 2px solid #E5E5E5;\n"
@@ -202,6 +205,7 @@ class Ui_Form(object):
         self.pushButton_3.setObjectName(u"pushButton_3")
         self.pushButton_3.setGeometry(QRect(300, 120, 120, 130))
         self.pushButton_3.setFont(font1)
+        self.pushButton_3.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         self.pushButton_3.setStyleSheet(u"QPushButton {\n"
 "    background-color: #FFFFFF;\n"
 "    border: 2px solid #E5E5E5;\n"
@@ -240,6 +244,7 @@ class Ui_Form(object):
         self.pushButton_4.setObjectName(u"pushButton_4")
         self.pushButton_4.setGeometry(QRect(440, 120, 120, 130))
         self.pushButton_4.setFont(font1)
+        self.pushButton_4.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         self.pushButton_4.setStyleSheet(u"QPushButton {\n"
 "    background-color: #FFFFFF;\n"
 "    border: 2px solid #E5E5E5;\n"
@@ -274,91 +279,6 @@ class Ui_Form(object):
 "	color: #1899D6;\n"
 "}")
         self.pushButton_4.setCheckable(True)
-        self.frame_2 = QFrame(Form)
-        self.frame_2.setObjectName(u"frame_2")
-        self.frame_2.setGeometry(QRect(0, 0, 580, 440))
-        self.frame_2.setStyleSheet(u"QFrame{\n"
-"	background-color: rgba(255, 255, 255, 80%);\n"
-"}")
-        self.frame_2.setFrameShape(QFrame.NoFrame)
-        self.frame_2.setFrameShadow(QFrame.Raised)
-        self.frame_3 = QFrame(self.frame_2)
-        self.frame_3.setObjectName(u"frame_3")
-        self.frame_3.setGeometry(QRect(90, 100, 381, 221))
-        self.frame_3.setStyleSheet(u"QFrame{\n"
-"	background-color: #FFFFFF;\n"
-"	border: 2px solid #E5E5E5;\n"
-"    padding: 10px;\n"
-"    border-radius: 16px;\n"
-"}")
-        self.frame_3.setFrameShape(QFrame.StyledPanel)
-        self.frame_3.setFrameShadow(QFrame.Raised)
-        self.label_5 = QLabel(self.frame_3)
-        self.label_5.setObjectName(u"label_5")
-        self.label_5.setGeometry(QRect(10, 10, 300, 50))
-        font7 = QFont()
-        font7.setFamilies([u"Microsoft YaHei UI"])
-        font7.setPointSize(16)
-        font7.setBold(False)
-        self.label_5.setFont(font7)
-        self.label_5.setStyleSheet(u"border: none;\n"
-"background-color: none;")
-        self.hiragana = QPushButton(self.frame_3)
-        self.hiragana.setObjectName(u"hiragana")
-        self.hiragana.setGeometry(QRect(20, 70, 340, 50))
-        font8 = QFont()
-        font8.setFamilies([u"Yu Gothic"])
-        font8.setPointSize(14)
-        font8.setBold(True)
-        self.hiragana.setFont(font8)
-        self.hiragana.setStyleSheet(u"QPushButton {\n"
-"    background-color: #1CB0F6;\n"
-"    padding: 10px;\n"
-"    border-radius: 16px;\n"
-"	border-bottom: 4px solid #1899D6;\n"
-"    margin-bottom: 2px;\n"
-"	color: #FFFFFF\n"
-"}\n"
-"QPushButton:hover{\n"
-"    background-color: #1FC2FF;\n"
-"    padding: 10px;\n"
-"    border-radius: 16px;\n"
-"	border-bottom: 4px solid #1899D6;\n"
-"    margin-bottom: 2px;\n"
-"	color: #FFFFFF\n"
-"}\n"
-"QPushButton:pressed{\n"
-"    background-color: #1FC2FF;\n"
-"    padding: 10px;\n"
-"    border: none;\n"
-"	color: #FFFFFF\n"
-"}")
-        self.katakana = QPushButton(self.frame_3)
-        self.katakana.setObjectName(u"katakana")
-        self.katakana.setGeometry(QRect(20, 140, 340, 50))
-        self.katakana.setFont(font8)
-        self.katakana.setStyleSheet(u"QPushButton {\n"
-"    background-color: #1CB0F6;\n"
-"    padding: 10px;\n"
-"    border-radius: 16px;\n"
-"	border-bottom: 4px solid #1899D6;\n"
-"    margin-bottom: 2px;\n"
-"	color: #FFFFFF\n"
-"}\n"
-"QPushButton:hover{\n"
-"    background-color: #1FC2FF;\n"
-"    padding: 10px;\n"
-"    border-radius: 16px;\n"
-"	border-bottom: 4px solid #1899D6;\n"
-"    margin-bottom: 2px;\n"
-"	color: #FFFFFF\n"
-"}\n"
-"QPushButton:pressed{\n"
-"    background-color: #1FC2FF;\n"
-"    padding: 10px;\n"
-"    border: none;\n"
-"	color: #FFFFFF\n"
-"}")
 
         self.retranslateUi(Form)
 
@@ -377,8 +297,5 @@ class Ui_Form(object):
         self.pushButton_2.setText(QCoreApplication.translate("Form", u"\u3042", None))
         self.pushButton_3.setText(QCoreApplication.translate("Form", u"\u3042", None))
         self.pushButton_4.setText(QCoreApplication.translate("Form", u"\u3042", None))
-        self.label_5.setText(QCoreApplication.translate("Form", u"<html><head/><body><p><span style=\" color:#4b4b4b;\"><b>\u8bf7\u9009\u62e9\u6a21\u5f0f</b></span></p></body></html>", None))
-        self.hiragana.setText(QCoreApplication.translate("Form", u"\u5e73\u4eee\u540d", None))
-        self.katakana.setText(QCoreApplication.translate("Form", u"\u7247\u4eee\u540d", None))
     # retranslateUi
 
