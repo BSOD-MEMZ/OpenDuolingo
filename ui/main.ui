@@ -64,7 +64,7 @@
   <property name="windowTitle">
    <string>OpenDuolingo</string>
   </property>
-  <widget class="QPushButton" name="pushButton">
+  <widget class="QPushButton" name="option_button_1">
    <property name="geometry">
     <rect>
      <x>20</x>
@@ -124,7 +124,7 @@ QPushButton:checked{
     <bool>true</bool>
    </property>
   </widget>
-  <widget class="QLabel" name="label">
+  <widget class="QLabel" name="hint_labell">
    <property name="geometry">
     <rect>
      <x>20</x>
@@ -144,7 +144,7 @@ QPushButton:checked{
     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#3c3c3c;&quot;&gt;&lt;b&gt;选择正确的假名&lt;/b&gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_2">
+  <widget class="QLabel" name="problem_label">
    <property name="geometry">
     <rect>
      <x>20</x>
@@ -164,7 +164,7 @@ QPushButton:checked{
     <string>a</string>
    </property>
   </widget>
-  <widget class="QLabel" name="combo">
+  <widget class="QLabel" name="combo_label">
    <property name="geometry">
     <rect>
      <x>460</x>
@@ -184,7 +184,7 @@ QPushButton:checked{
     <string>0 Combo</string>
    </property>
   </widget>
-  <widget class="QFrame" name="frame">
+  <widget class="QFrame" name="judgement_frame">
    <property name="geometry">
     <rect>
      <x>0</x>
@@ -204,7 +204,7 @@ QPushButton:checked{
    <property name="frameShadow">
     <enum>QFrame::Shadow::Raised</enum>
    </property>
-   <widget class="QLabel" name="label_3">
+   <widget class="QLabel" name="judgement_label">
     <property name="enabled">
      <bool>true</bool>
     </property>
@@ -227,7 +227,7 @@ QPushButton:checked{
      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#58a700;&quot;&gt;真棒！&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="continuebutton">
+   <widget class="QPushButton" name="continue_button">
     <property name="geometry">
      <rect>
       <x>410</x>
@@ -282,7 +282,7 @@ QPushButton:disabled{
      <string>检查</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_4">
+   <widget class="QLabel" name="answer_label">
     <property name="enabled">
      <bool>true</bool>
     </property>
@@ -309,7 +309,7 @@ QPushButton:disabled{
     </property>
    </widget>
   </widget>
-  <widget class="QPushButton" name="pushButton_2">
+  <widget class="QPushButton" name="option_button_2">
    <property name="geometry">
     <rect>
      <x>160</x>
@@ -369,7 +369,7 @@ QPushButton:checked{
     <bool>true</bool>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_3">
+  <widget class="QPushButton" name="option_button_3">
    <property name="geometry">
     <rect>
      <x>300</x>
@@ -429,7 +429,7 @@ QPushButton:checked{
     <bool>true</bool>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_4">
+  <widget class="QPushButton" name="option_button_4">
    <property name="geometry">
     <rect>
      <x>440</x>
