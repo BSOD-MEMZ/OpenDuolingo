@@ -1,0 +1,11 @@
+[project]
+name = "openlingo"
+version = "0.1.0"
+description = "多邻国非官方开源版本"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = ["pyside6>=6.9.1"]
+
+[[tool.uv.index]]
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
+default = true
