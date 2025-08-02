@@ -8,7 +8,7 @@ from PySide6.QtMultimedia import QSoundEffect
 from PySide6.QtWidgets import QApplication, QMainWindow
 
 import style
-from kana_list import kana_list
+from kana_list import KanaList
 from ui import main_ui, mode_select_ui
 
 
@@ -71,7 +71,7 @@ class App(main_ui.Ui_Form):
 
         print("creating")
         self.answer = random.randint(0, 3)
-        problems = random.sample(kana_list, 4)
+        problems = KanaList.pick_random(4)
         for i in range(4):
             button = self.buttons[i]
             button.setText(problems[i][self.mode])
