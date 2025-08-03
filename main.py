@@ -4,6 +4,7 @@ from functools import partial
 from typing import Literal
 
 from PySide6.QtCore import Qt, QUrl
+from PySide6.QtGui import QFont, QFontDatabase
 from PySide6.QtMultimedia import QSoundEffect
 from PySide6.QtWidgets import QApplication, QMainWindow
 
@@ -55,12 +56,17 @@ class App(main_ui.Ui_Form):
         _mode_select_ui.katakana.clicked.connect(mode_select("katakana"))
 
         # 音效初始化
-        self.se_correct = QSoundEffect(
-            source=QUrl.fromLocalFile("resource/SE/correct.wav")
+        self.se_correct = QSoundEffect(source=QUrl.fromLocalFile("resources/SE/correct.wav"))
+        self.se_incorrect = QSoundEffect(source=QUrl.fromLocalFile("resources/SE/incorrect.wav"))
+
+        # 字体初始化
+        families = QFontDatabase.applicationFontFamilies(
+            QFontDatabase.addApplicationFont("resources/fonts/DINRound.otf")
         )
-        self.se_incorrect = QSoundEffect(
-            source=QUrl.fromLocalFile("resource/SE/incorrect.wav")
-        )
+        duo_font = f"{families[0]}, " if families else ""
+
+        self.font = QFont(f"{duo_font}Microsoft YaHei UI, sans-serif")
+        Form.setFont(self.font)
 
     def create_problem(self):
         """出题"""

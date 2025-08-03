@@ -56,11 +56,6 @@
     </disabled>
    </palette>
   </property>
-  <property name="font">
-   <font>
-    <family>Microsoft YaHei UI</family>
-   </font>
-  </property>
   <widget class="QPushButton" name="option_button_1">
    <property name="geometry">
     <rect>
@@ -72,7 +67,6 @@
    </property>
    <property name="font">
     <font>
-     <family>Yu Gothic</family>
      <pointsize>36</pointsize>
     </font>
    </property>
@@ -132,7 +126,6 @@ QPushButton:checked{
    </property>
    <property name="font">
     <font>
-     <family>Microsoft YaHei UI</family>
      <pointsize>18</pointsize>
      <bold>true</bold>
     </font>
@@ -152,7 +145,6 @@ QPushButton:checked{
    </property>
    <property name="font">
     <font>
-     <family>Yu Gothic</family>
      <pointsize>36</pointsize>
      <bold>true</bold>
     </font>
@@ -172,7 +164,6 @@ QPushButton:checked{
    </property>
    <property name="font">
     <font>
-     <family>Yu Gothic</family>
      <pointsize>18</pointsize>
      <bold>false</bold>
     </font>
@@ -215,7 +206,6 @@ QPushButton:checked{
     </property>
     <property name="font">
      <font>
-      <family>Microsoft YaHei UI</family>
       <pointsize>18</pointsize>
       <bold>true</bold>
      </font>
@@ -235,7 +225,6 @@ QPushButton:checked{
     </property>
     <property name="font">
      <font>
-      <family>Microsoft YaHei UI</family>
       <pointsize>14</pointsize>
       <bold>true</bold>
      </font>
@@ -293,7 +282,6 @@ QPushButton:disabled{
     </property>
     <property name="font">
      <font>
-      <family>Microsoft YaHei UI</family>
       <pointsize>12</pointsize>
       <bold>false</bold>
      </font>
@@ -317,7 +305,6 @@ QPushButton:disabled{
    </property>
    <property name="font">
     <font>
-     <family>Yu Gothic</family>
      <pointsize>36</pointsize>
     </font>
    </property>
@@ -377,7 +364,6 @@ QPushButton:checked{
    </property>
    <property name="font">
     <font>
-     <family>Yu Gothic</family>
      <pointsize>36</pointsize>
     </font>
    </property>
@@ -437,7 +423,6 @@ QPushButton:checked{
    </property>
    <property name="font">
     <font>
-     <family>Yu Gothic</family>
      <pointsize>36</pointsize>
     </font>
    </property>
