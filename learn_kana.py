@@ -9,7 +9,7 @@ from PySide6.QtGui import QFont, QFontDatabase
 from PySide6.QtMultimedia import QSoundEffect
 from PySide6.QtWidgets import QApplication, QMainWindow, QWidget
 
-import style
+from ui import style
 from ui.learn_kana import main_ui, mode_select_ui
 
 
