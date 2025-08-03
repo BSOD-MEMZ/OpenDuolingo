@@ -1,66 +1,73 @@
 import random
-from typing import Literal
+from enum import Enum
+
+
+class Kana(Enum):
+    HIRA = "hiragana"  # 平假名
+    KATA = "katakana"  # 片假名
+    ROMA = "romaji"  # 罗马音
 
 
 class KanaList:
-    kana_list: list[dict[Literal["hiragana", "katakana", "romaji"], str]] = [
-        {"hiragana": "あ", "katakana": "ア", "romaji": "a"},
-        {"hiragana": "い", "katakana": "イ", "romaji": "i"},
-        {"hiragana": "う", "katakana": "ウ", "romaji": "u"},
-        {"hiragana": "え", "katakana": "エ", "romaji": "e"},
-        {"hiragana": "お", "katakana": "オ", "romaji": "o"},
-        {"hiragana": "か", "katakana": "カ", "romaji": "ka"},
-        {"hiragana": "き", "katakana": "キ", "romaji": "ki"},
-        {"hiragana": "く", "katakana": "ク", "romaji": "ku"},
-        {"hiragana": "け", "katakana": "ケ", "romaji": "ke"},
-        {"hiragana": "こ", "katakana": "コ", "romaji": "ko"},
-        {"hiragana": "さ", "katakana": "サ", "romaji": "sa"},
-        {"hiragana": "し", "katakana": "シ", "romaji": "shi"},
-        {"hiragana": "す", "katakana": "ス", "romaji": "su"},
-        {"hiragana": "せ", "katakana": "セ", "romaji": "se"},
-        {"hiragana": "そ", "katakana": "ソ", "romaji": "so"},
-        {"hiragana": "た", "katakana": "タ", "romaji": "ta"},
-        {"hiragana": "ち", "katakana": "チ", "romaji": "chi"},
-        {"hiragana": "つ", "katakana": "ツ", "romaji": "tsu"},
-        {"hiragana": "て", "katakana": "テ", "romaji": "te"},
-        {"hiragana": "と", "katakana": "ト", "romaji": "to"},
-        {"hiragana": "な", "katakana": "ナ", "romaji": "na"},
-        {"hiragana": "に", "katakana": "ニ", "romaji": "ni"},
-        {"hiragana": "ぬ", "katakana": "ヌ", "romaji": "nu"},
-        {"hiragana": "ね", "katakana": "ネ", "romaji": "ne"},
-        {"hiragana": "の", "katakana": "ノ", "romaji": "no"},
-        {"hiragana": "は", "katakana": "ハ", "romaji": "ha"},
-        {"hiragana": "ひ", "katakana": "ヒ", "romaji": "hi"},
-        {"hiragana": "ふ", "katakana": "フ", "romaji": "fu"},
-        {"hiragana": "へ", "katakana": "ヘ", "romaji": "he"},
-        {"hiragana": "ほ", "katakana": "ホ", "romaji": "ho"},
-        {"hiragana": "ま", "katakana": "マ", "romaji": "ma"},
-        {"hiragana": "み", "katakana": "ミ", "romaji": "mi"},
-        {"hiragana": "む", "katakana": "ム", "romaji": "mu"},
-        {"hiragana": "め", "katakana": "メ", "romaji": "me"},
-        {"hiragana": "も", "katakana": "モ", "romaji": "mo"},
-        {"hiragana": "や", "katakana": "ヤ", "romaji": "ya"},
-        {"hiragana": "ゆ", "katakana": "ユ", "romaji": "yu"},
-        {"hiragana": "よ", "katakana": "ヨ", "romaji": "yo"},
-        {"hiragana": "ら", "katakana": "ラ", "romaji": "ra"},
-        {"hiragana": "り", "katakana": "リ", "romaji": "ri"},
-        {"hiragana": "る", "katakana": "ル", "romaji": "ru"},
-        {"hiragana": "れ", "katakana": "レ", "romaji": "re"},
-        {"hiragana": "ろ", "katakana": "ロ", "romaji": "ro"},
-        {"hiragana": "わ", "katakana": "ワ", "romaji": "wa"},
-        {"hiragana": "を", "katakana": "ヲ", "romaji": "wo"},
-        {"hiragana": "ん", "katakana": "ン", "romaji": "n"},
+    kana_list: list[dict[Kana, str]] = [
+        {Kana.HIRA: "あ", Kana.KATA: "ア", Kana.ROMA: "a"},
+        {Kana.HIRA: "い", Kana.KATA: "イ", Kana.ROMA: "i"},
+        {Kana.HIRA: "う", Kana.KATA: "ウ", Kana.ROMA: "u"},
+        {Kana.HIRA: "え", Kana.KATA: "エ", Kana.ROMA: "e"},
+        {Kana.HIRA: "お", Kana.KATA: "オ", Kana.ROMA: "o"},
+        {Kana.HIRA: "か", Kana.KATA: "カ", Kana.ROMA: "ka"},
+        {Kana.HIRA: "き", Kana.KATA: "キ", Kana.ROMA: "ki"},
+        {Kana.HIRA: "く", Kana.KATA: "ク", Kana.ROMA: "ku"},
+        {Kana.HIRA: "け", Kana.KATA: "ケ", Kana.ROMA: "ke"},
+        {Kana.HIRA: "こ", Kana.KATA: "コ", Kana.ROMA: "ko"},
+        {Kana.HIRA: "さ", Kana.KATA: "サ", Kana.ROMA: "sa"},
+        {Kana.HIRA: "し", Kana.KATA: "シ", Kana.ROMA: "shi"},
+        {Kana.HIRA: "す", Kana.KATA: "ス", Kana.ROMA: "su"},
+        {Kana.HIRA: "せ", Kana.KATA: "セ", Kana.ROMA: "se"},
+        {Kana.HIRA: "そ", Kana.KATA: "ソ", Kana.ROMA: "so"},
+        {Kana.HIRA: "た", Kana.KATA: "タ", Kana.ROMA: "ta"},
+        {Kana.HIRA: "ち", Kana.KATA: "チ", Kana.ROMA: "chi"},
+        {Kana.HIRA: "つ", Kana.KATA: "ツ", Kana.ROMA: "tsu"},
+        {Kana.HIRA: "て", Kana.KATA: "テ", Kana.ROMA: "te"},
+        {Kana.HIRA: "と", Kana.KATA: "ト", Kana.ROMA: "to"},
+        {Kana.HIRA: "な", Kana.KATA: "ナ", Kana.ROMA: "na"},
+        {Kana.HIRA: "に", Kana.KATA: "ニ", Kana.ROMA: "ni"},
+        {Kana.HIRA: "ぬ", Kana.KATA: "ヌ", Kana.ROMA: "nu"},
+        {Kana.HIRA: "ね", Kana.KATA: "ネ", Kana.ROMA: "ne"},
+        {Kana.HIRA: "の", Kana.KATA: "ノ", Kana.ROMA: "no"},
+        {Kana.HIRA: "は", Kana.KATA: "ハ", Kana.ROMA: "ha"},
+        {Kana.HIRA: "ひ", Kana.KATA: "ヒ", Kana.ROMA: "hi"},
+        {Kana.HIRA: "ふ", Kana.KATA: "フ", Kana.ROMA: "fu"},
+        {Kana.HIRA: "へ", Kana.KATA: "ヘ", Kana.ROMA: "he"},
+        {Kana.HIRA: "ほ", Kana.KATA: "ホ", Kana.ROMA: "ho"},
+        {Kana.HIRA: "ま", Kana.KATA: "マ", Kana.ROMA: "ma"},
+        {Kana.HIRA: "み", Kana.KATA: "ミ", Kana.ROMA: "mi"},
+        {Kana.HIRA: "む", Kana.KATA: "ム", Kana.ROMA: "mu"},
+        {Kana.HIRA: "め", Kana.KATA: "メ", Kana.ROMA: "me"},
+        {Kana.HIRA: "も", Kana.KATA: "モ", Kana.ROMA: "mo"},
+        {Kana.HIRA: "や", Kana.KATA: "ヤ", Kana.ROMA: "ya"},
+        {Kana.HIRA: "ゆ", Kana.KATA: "ユ", Kana.ROMA: "yu"},
+        {Kana.HIRA: "よ", Kana.KATA: "ヨ", Kana.ROMA: "yo"},
+        {Kana.HIRA: "ら", Kana.KATA: "ラ", Kana.ROMA: "ra"},
+        {Kana.HIRA: "り", Kana.KATA: "リ", Kana.ROMA: "ri"},
+        {Kana.HIRA: "る", Kana.KATA: "ル", Kana.ROMA: "ru"},
+        {Kana.HIRA: "れ", Kana.KATA: "レ", Kana.ROMA: "re"},
+        {Kana.HIRA: "ろ", Kana.KATA: "ロ", Kana.ROMA: "ro"},
+        {Kana.HIRA: "わ", Kana.KATA: "ワ", Kana.ROMA: "wa"},
+        {Kana.HIRA: "を", Kana.KATA: "ヲ", Kana.ROMA: "wo"},
+        {Kana.HIRA: "ん", Kana.KATA: "ン", Kana.ROMA: "n"},
     ]
 
     # 使用平假名索引
-    from_hira = {k["hiragana"]: k for k in kana_list}
+    from_hira = {k[Kana.HIRA]: k for k in kana_list}
     # 使用片假名索引
-    from_kata = {k["katakana"]: k for k in kana_list}
+    from_kata = {k[Kana.KATA]: k for k in kana_list}
     # 使用罗马音索引
-    from_roma = {k["romaji"]: k for k in kana_list}
+    from_roma = {k[Kana.ROMA]: k for k in kana_list}
 
     @classmethod
     def __class_getitem__(cls, key: str):
+        # 重载 KanaList[key]
         if key in cls.from_hira:
             return cls.from_hira[key]
         elif key in cls.from_kata:

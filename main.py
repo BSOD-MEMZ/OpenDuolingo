@@ -6,10 +6,10 @@ from typing import Literal
 from PySide6.QtCore import Qt, QUrl
 from PySide6.QtGui import QFont, QFontDatabase
 from PySide6.QtMultimedia import QSoundEffect
-from PySide6.QtWidgets import QApplication, QMainWindow
+from PySide6.QtWidgets import QApplication, QMainWindow, QWidget
 
 import style
-from kana_list import KanaList
+from kana_list import Kana, KanaList
 from ui import main_ui, mode_select_ui
 
 
@@ -19,9 +19,9 @@ class App(main_ui.Ui_Form):
         self.answer = -1
         self.combo = 0
         self.next_action: Literal["create", "judge"] = "judge"
-        self.mode: Literal["hiragana", "katakana"]
+        self.mode: Kana
 
-    def setupUi(self, Form):
+    def setupUi(self, Form: QWidget):
         """初始化UI"""
         super().setupUi(Form)
 
@@ -43,7 +43,7 @@ class App(main_ui.Ui_Form):
         _mode_select_ui = mode_select_ui.Ui_Form()
         _mode_select_ui.setupUi(Form)
 
-        def mode_select(mode: Literal["hiragana", "katakana"]):
+        def mode_select(mode: Kana):
             # 这是一个闭包
             def func():
                 self.mode = mode
@@ -52,8 +52,8 @@ class App(main_ui.Ui_Form):
 
             return func
 
-        _mode_select_ui.hiragana.clicked.connect(mode_select("hiragana"))
-        _mode_select_ui.katakana.clicked.connect(mode_select("katakana"))
+        _mode_select_ui.hiragana.clicked.connect(mode_select(Kana.HIRA))
+        _mode_select_ui.katakana.clicked.connect(mode_select(Kana.KATA))
 
         # 音效初始化
         self.se_correct = QSoundEffect(source=QUrl.fromLocalFile("resources/SE/correct.wav"))
@@ -84,7 +84,7 @@ class App(main_ui.Ui_Form):
             button.setChecked(False)
             button.setEnabled(True)
             if i == self.answer:
-                self.problem_label.setText(problems[i]["romaji"])
+                self.problem_label.setText(problems[i][Kana.ROMA])
                 self.answer_text = problems[i][self.mode]
 
         self.selected = -1
@@ -123,13 +123,9 @@ class App(main_ui.Ui_Form):
         else:
             print("incorrect")
             self.judgement_frame.setStyleSheet("background-color: #FFDFE0;")
-            self.judgement_label.setText(
-                "<span style='color:#ED2B2B;'>铸币吧怎么这么菜啊</span>"
-            )
+            self.judgement_label.setText("<span style='color:#ED2B2B;'>铸币吧怎么这么菜啊</span>")
             self.judgement_label.show()
-            self.answer_label.setText(
-                f"<span style='color:#EA2B2B;'>{self.answer_text}</span>"
-            )
+            self.answer_label.setText(f"<span style='color:#EA2B2B;'>{self.answer_text}</span>")
             self.answer_label.show()
             self.continue_button.setStyleSheet(style.button_red)
             self.combo = 0
