@@ -6,8 +6,7 @@ QPushButton {
     border-radius: 12px;
     border-width: 2px 2px 4px;
     padding: 0 16px;
-    /*font-size: 72px;*/
-    font-weight: bold;
+    /* font-size: 72px; */
     letter-spacing: 0.8px;
     text-decoration: none;
 }
