@@ -1,10 +1,10 @@
 import json
 import time
+from abc import ABCMeta, abstractmethod
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Literal, Self
 
-import style
 from PySide6.QtCore import QEasingCurve, QSize, Qt, QTimer, QUrl, Signal
 from PySide6.QtGui import QColor, QFont, QFontDatabase, QPainter, QPaintEvent, QPixmap
 from PySide6.QtMultimedia import QSoundEffect
@@ -24,13 +24,29 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
+import style
 
-class AbstractChallenge(QWidget):
+
+class MetaQObjectABC(ABCMeta, type(QWidget)):
+    """兼容元类"""
+
+    pass
+
+
+class AbstractChallenge(QWidget, metaclass=MetaQObjectABC):
+    """题目的抽象基类，所有题目必须继承此类并实现声明的方法"""
+
+    # 必须在答案可用时发出该信号
     optionSelected = Signal(bool)
 
+    @abstractmethod
     def check_answer(self) -> tuple[bool, str]:
-        """检查答案"""
-        raise NotImplementedError("子类必须实现 check_answer 方法")
+        """检查答案
+
+        Returns:
+            tuple[bool, str]: 二元组，分别为题目正误和正确答案
+        """
+        ...
 
 
 class SingleChoice(AbstractChallenge):
