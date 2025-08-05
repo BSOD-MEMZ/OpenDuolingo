@@ -1,3 +1,34 @@
+button_option = """
+QPushButton {
+    color: #4B4B4B;
+    background-color: #FFFFFF;
+    border: 2px solid #E5E5E5;
+    border-radius: 12px;
+    border-width: 2px 2px 4px;
+    padding: 0 16px;
+    /*font-size: 72px;*/
+    font-weight: bold;
+    letter-spacing: 0.8px;
+    text-decoration: none;
+}
+QPushButton:hover{
+    background-color: #F7F7F7;
+}
+QPushButton:pressed{
+    margin-top: 2px;
+    border-bottom-width: 2px;
+}
+QPushButton:checked{
+    color: #1899D6;
+    background-color: #DDF4FF;
+    border-color: #84D8FF;
+}
+QPushButton:checked[correct="true"]:
+    color: #58A700;
+    background-color: #D7FFB8;
+    border-color: #A5ED6E;
+"""
+
 button_green = """
 QPushButton {
     color: #FFFFFF;
@@ -11,7 +42,6 @@ QPushButton {
     letter-spacing: 0.8px;
     text-transform: uppercase;
     text-decoration: none;
-    white-space: nowrap;
 }
 QPushButton:hover{
     background-color: #61E002;
@@ -44,7 +74,6 @@ QPushButton {
     letter-spacing: 0.8px;
     text-transform: uppercase;
     text-decoration: none;
-    white-space: nowrap;
 }
 QPushButton:hover{
     background-color: #FF5252;
@@ -76,7 +105,6 @@ QPushButton {
     letter-spacing: 0.8px;
     text-transform: uppercase;
     text-decoration: none;
-    white-space: nowrap;
 }
 QPushButton:hover{
     color: #9D9D9D;

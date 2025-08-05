@@ -1,0 +1,35 @@
+[
+    {
+        "type": "single",
+        "question": "舞萌DX中，哪个音符的分数占比较高",
+        "options": [
+            "TAP",
+            "HOLD",
+            "SLIDE",
+            "BREAK"
+        ],
+        "answer": 3
+    },
+    {
+        "type": "single",
+        "question": "田所浩二的 DX Rating 是 11451，他是",
+        "options": [
+            "铜框",
+            "彩框",
+            "紫框",
+            "白框"
+        ],
+        "answer": 2
+    },
+    {
+        "type": "single",
+        "question": "舞萌DX中，紫谱难度为 15 的歌曲不包括",
+        "options": [
+            "raputa",
+            "系ぎて",
+            "Xaleid\nscopiX",
+            "PANDORA\nPARADOXXX"
+        ],
+        "answer": 0
+    }
+]
