@@ -24,7 +24,10 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
-import style
+if __name__ == "__main__":
+    import style
+else:
+    from . import style
 
 
 class MetaQObjectABC(ABCMeta, type(QWidget)):
@@ -105,11 +108,19 @@ class SingleChoice(AbstractChallenge):
         return result, self.option_texts[self.answer]
 
 
+class SingleCharChoice(SingleChoice):
+    def __init__(self, options: list[str], answer: int):
+        super().__init__(options, answer)
+
+        style_sheet = style.button_option.replace("/* font-size: 72px; */", "font-size: 72px;")
+        self.setStyleSheet(style_sheet)
+
+
 @dataclass
 class ChallengeData:
     """题目数据"""
 
-    type: Literal["single"]
+    type: Literal["single", "single-char"]
     question: str
     options: list[str]
     answer: int
@@ -128,6 +139,8 @@ class ChallengeData:
         match self.type:
             case "single":
                 return SingleChoice(options=self.options, answer=self.answer)
+            case "single-char":
+                return SingleCharChoice(options=self.options, answer=self.answer)
             case other:
                 raise ValueError(f"Unknown challenge type {other}")
 
@@ -573,11 +586,7 @@ if __name__ == "__main__":
     application = QApplication()
     application.styleHints().setColorScheme(Qt.ColorScheme.Light)
 
-    families = QFontDatabase.applicationFontFamilies(
-        QFontDatabase.addApplicationFont(
-            r"d:\MyPC\Advanced\Code\Python\Projects\openlingo\resources\fonts\DINRound.otf"
-        )
-    )
+    families = QFontDatabase.applicationFontFamilies(QFontDatabase.addApplicationFont(r"resources\fonts\DINRound.otf"))
     font = QFont(f"{f'{families[0]}, ' if families else ''}Microsoft YaHei UI, sans-serif")
     application.setFont(font)
 
