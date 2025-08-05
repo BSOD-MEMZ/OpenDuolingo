@@ -5,7 +5,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Literal, Self
 
-from PySide6.QtCore import QEasingCurve, QSize, Qt, QTimer, QUrl, Signal
+from PySide6.QtCore import QEasingCurve, QEvent, QSize, Qt, QTimer, QUrl, Signal
 from PySide6.QtGui import QColor, QFont, QFontDatabase, QKeySequence, QPainter, QPaintEvent, QPixmap, QShortcut
 from PySide6.QtMultimedia import QSoundEffect
 from PySide6.QtWidgets import (
@@ -69,9 +69,7 @@ class SingleChoice(AbstractChallenge):
 
         # 遍历题目
         for i, text in enumerate(options):
-            button = QPushButton(text)
-            button.setMaximumSize(144, 220)
-            button.setCheckable(True)
+            button = KeyHintButton(text, str(i + 1))
 
             self.option_buttons.append(button)
             self.button_group.addButton(button, i)
@@ -92,10 +90,13 @@ class SingleChoice(AbstractChallenge):
 
     def check_answer(self):
         """检查答案"""
-        print(f"Checking... (selected: {self.selected}, answer: {self.answer}")
+        print(f"Checking... (selected: {self.selected}, answer: {self.answer}) | ", end="")
         result = self.selected == self.answer
         if result:
-            self.option_buttons[self.selected].setProperty("correct", "true")
+            button = self.option_buttons[self.selected]
+            button.setProperty("correct", "true")
+            button.style().unpolish(button)
+            button.style().polish(button)
             print("True")
         else:
             print("False")
@@ -208,6 +209,75 @@ class AnimatedProgressBar(QProgressBar):
 
         if progress >= 1.0:
             self._timer.stop()
+
+
+class KeyHintButton(QPushButton):
+    def __init__(self, text: str, key_hint: str, parent=None):
+        super().__init__(text, parent)
+
+        self.setMaximumSize(144, 220)
+        self.setCheckable(True)
+
+        # 创建角标
+        self.key_label = QLabel(key_hint, self)
+        self.key_label.setFixedSize(30, 30)
+        self.key_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.key_label.setStyleSheet("""
+                background-color: transparent;
+                color: #AFAFAF;
+                font-size: 15px;
+                border: 2px solid #E5E5E5;
+                border-radius: 8px;
+            """)
+        self.key_label.move(self.width() - 52, self.height() - 54)
+
+        self.update_key_style()
+        self.installEventFilter(self)
+
+    def update_key_style(self):
+        """根据按钮状态同步角标样式"""
+        if self.property("correct") == "true":
+            self.key_label.setStyleSheet("""
+                background-color: transparent;
+                color: #58A700;
+                font-size: 15px;
+                border: 2px solid #A5ED6E;
+                border-radius: 8px;
+            """)
+        elif self.isChecked():
+            self.key_label.setStyleSheet("""
+                background-color: transparent;
+                color: #1899D6;
+                font-size: 15px;
+                border: 2px solid #84D8FF;
+                border-radius: 8px;
+            """)
+        else:
+            self.key_label.setStyleSheet("""
+                background-color: transparent;
+                color: #AFAFAF;
+                font-size: 15px;
+                border: 2px solid #E5E5E5;
+                border-radius: 8px;
+            """)
+        if self.isDown():
+            self.key_label.move(self.width() - 52, self.height() - 52)
+        else:
+            self.key_label.move(self.width() - 52, self.height() - 54)
+
+    def setChecked(self, checked: bool):
+        super().setChecked(checked)
+        self.update_key_style()
+
+    def eventFilter(self, obj, event):
+        if obj == self and event.type() == QEvent.Paint:
+            self.update_key_style()
+        return super().eventFilter(obj, event)
+
+    def resizeEvent(self, event):
+        super().resizeEvent(event)
+        # 保证在窗口缩放时角标位置正确
+        self.key_label.move(self.width() - 52, self.height() - 54)
 
 
 class RoundIconWidget(QWidget):

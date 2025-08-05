@@ -11,22 +11,23 @@ QPushButton {
     letter-spacing: 0.8px;
     text-decoration: none;
 }
-QPushButton:hover{
+QPushButton:hover {
     background-color: #F7F7F7;
 }
-QPushButton:pressed{
+QPushButton:pressed {
     margin-top: 2px;
     border-bottom-width: 2px;
 }
-QPushButton:checked{
+QPushButton:checked {
     color: #1899D6;
     background-color: #DDF4FF;
     border-color: #84D8FF;
 }
-QPushButton:checked[correct="true"]:
+QPushButton[correct="true"] {
     color: #58A700;
     background-color: #D7FFB8;
     border-color: #A5ED6E;
+}
 """
 
 button_green = """
@@ -43,15 +44,15 @@ QPushButton {
     text-transform: uppercase;
     text-decoration: none;
 }
-QPushButton:hover{
+QPushButton:hover {
     background-color: #61E002;
     border-color: #61B800;
 }
-QPushButton:pressed{
+QPushButton:pressed {
     margin-top: 2px;
     border-bottom-width: 2px;
 }
-QPushButton:disabled{
+QPushButton:disabled {
     color: #AFAFAF;
     background-color: #E5E5E5;
     border-color: #E5E5E5;
@@ -75,15 +76,15 @@ QPushButton {
     text-transform: uppercase;
     text-decoration: none;
 }
-QPushButton:hover{
+QPushButton:hover {
     background-color: #FF5252;
     border-color: #FF2F2F;
 }
-QPushButton:pressed{
+QPushButton:pressed {
     margin-top: 2px;
     border-bottom-width: 2px;
 }
-QPushButton:disabled{
+QPushButton:disabled {
     color: #AFAFAF;
     background-color: #E5E5E5;
     border-color: #E5E5E5;
@@ -106,16 +107,16 @@ QPushButton {
     text-transform: uppercase;
     text-decoration: none;
 }
-QPushButton:hover{
+QPushButton:hover {
     color: #9D9D9D;
     background-color: #E5E5E5;
     border-color: #CECECE;
 }
-QPushButton:pressed{
+QPushButton:pressed {
     margin-top: 2px;
     border-bottom-width: 2px;
 }
-QPushButton:disabled{
+QPushButton:disabled {
     color: #AFAFAF;
     background-color: #E5E5E5
     margin-top: 2px;
