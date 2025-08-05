@@ -114,7 +114,7 @@ class ChallengeData:
 
     @classmethod
     def from_json(cls, path: str | Path) -> list[Self]:
-        """从json解析题目数据"""
+        """从json文件解析题目数据"""
         try:
             with open(path, "r", encoding="utf-8") as f:
                 raw = json.load(f)
@@ -126,8 +126,8 @@ class ChallengeData:
         match self.type:
             case "single":
                 return SingleChoice(options=self.options, answer=self.answer)
-            case _:
-                raise TypeError(f"Unknown challenge type {self.type}")
+            case other:
+                raise ValueError(f"Unknown challenge type {other}")
 
 
 class AlignedContainer(QWidget):
@@ -222,12 +222,12 @@ class RoundIconWidget(QWidget):
         painter = QPainter(self)
         painter.setRenderHint(QPainter.Antialiasing)
 
-        # 画白色圆形背景
+        # 白色圆形背景
         painter.setBrush(QColor("white"))
         painter.setPen(Qt.NoPen)
         painter.drawEllipse(0, 0, self.diameter, self.diameter)
 
-        # 画中心图标
+        # 中心图标
         icon_x = (self.width() - self.icon.width()) // 2
         icon_y = (self.height() - self.icon.height()) // 2
         painter.drawPixmap(icon_x, icon_y, self.icon)
@@ -385,30 +385,28 @@ class ChallengeUI(QWidget):
             self.judgment_layout.setColumnStretch(i, 1)
 
         ### 左侧按钮（跳过）
-        self.judge_button_left = QPushButton("跳过")
-        self.judge_button_left.setFixedSize(150, 48)
-        self.judge_button_left.setCursor(Qt.PointingHandCursor)
-        self.judge_button_left.setStyleSheet(style.button_white)
-        self.judge_button_left.setVisible(False)  # 默认隐藏
+        self.skip_button = QPushButton("跳过")
+        self.skip_button.setFixedSize(150, 48)
+        self.skip_button.setCursor(Qt.PointingHandCursor)
+        self.skip_button.setStyleSheet(style.button_white)
+        self.skip_button.setVisible(False)  # 默认隐藏
 
-        judge_button_container_left = AlignedContainer(self.judge_button_left, QHBoxLayout, Qt.AlignmentFlag.AlignLeft)
-        self.judgment_layout.addWidget(judge_button_container_left, 0, 0)
+        skip_button_container = AlignedContainer(self.skip_button, QHBoxLayout, Qt.AlignmentFlag.AlignLeft)
+        self.judgment_layout.addWidget(skip_button_container, 0, 0)
 
         ### 右侧按钮（提交/继续）
-        self.judge_button_right = QPushButton("检查")
-        self.judge_button_right.setFixedSize(150, 48)
-        self.judge_button_right.setCursor(Qt.PointingHandCursor)
-        self.judge_button_right.setStyleSheet(style.button_green)
-        self.judge_button_right.setEnabled(False)
+        self.continue_button = QPushButton("检查")
+        self.continue_button.setFixedSize(150, 48)
+        self.continue_button.setCursor(Qt.PointingHandCursor)
+        self.continue_button.setStyleSheet(style.button_green)
+        self.continue_button.setEnabled(False)  # 默认禁用
 
         ### 提交逻辑
         self.next_action: Literal["check", "next", "finish"] = "check"
-        self.judge_button_right.clicked.connect(self.next)
+        self.continue_button.clicked.connect(self.next)
 
-        judge_button_container_right = AlignedContainer(
-            self.judge_button_right, QHBoxLayout, Qt.AlignmentFlag.AlignRight
-        )
-        self.judgment_layout.addWidget(judge_button_container_right, 0, 4)
+        continue_button_container = AlignedContainer(self.continue_button, QHBoxLayout, Qt.AlignmentFlag.AlignRight)
+        self.judgment_layout.addWidget(continue_button_container, 0, 4)
 
         # 音效
         self.se_correct = QSoundEffect(source=QUrl.fromLocalFile("resources/SE/correct.wav"))
@@ -437,10 +435,10 @@ class ChallengeUI(QWidget):
         self.challenge_question.setFixedHeight(40)
 
         # 选项
-        self.challenge = data.create_challenge()
+        self.challenge: AbstractChallenge = data.create_challenge()
 
         def setCheckButtonEnable(flag):
-            self.judge_button_right.setEnabled(flag)
+            self.continue_button.setEnabled(flag)
 
         self.challenge.optionSelected.connect(setCheckButtonEnable)
 
@@ -449,66 +447,66 @@ class ChallengeUI(QWidget):
 
     def next(self):
         """下一步操作（检查答案/下一题）"""
-        match self.next_action:
-            case "check":
-                is_correct, answer = self.challenge.check_answer()
+        if self.next_action == "check":  # 检查答案
+            is_correct, answer = self.challenge.check_answer()
 
-                # 播放音效
-                if is_correct:
-                    self.se_correct.play()
-                else:
-                    self.se_incorrect.play()
+            # 播放音效
+            if is_correct:
+                self.se_correct.play()
+            else:
+                self.se_incorrect.play()
 
-                # 显示信息面板
-                self.judgment_container.setStyleSheet(f"background-color: {'#D7FFB8' if is_correct else '#FFDFE0'};")
-                self.answer_result = (
-                    AnswerResult(True, "正确！") if is_correct else AnswerResult(False, "正确答案：", answer)
-                )
-                self.judge_button_left.setVisible(False)
-                self.judgment_layout.addWidget(self.answer_result, 0, 0, 1, 4)
+            # 显示信息面板
+            self.judgment_container.setStyleSheet(f"background-color: {'#D7FFB8' if is_correct else '#FFDFE0'};")
+            self.answer_result = (
+                AnswerResult(True, "正确！") if is_correct else AnswerResult(False, "正确答案：", answer)
+            )
+            self.skip_button.setVisible(False)
+            self.judgment_layout.addWidget(self.answer_result, 0, 0, 1, 4)
 
-                # 更新界面
-                self.progress_bar.setValue(self.challenge_index + 1)
-                self.judge_button_right.setStyleSheet(style.button_green if is_correct else style.button_red)
+            # 更新界面
+            self.progress_bar.setValue(self.challenge_index + 1)
+            self.continue_button.setText("继续")
+            self.continue_button.setStyleSheet(style.button_green if is_correct else style.button_red)
 
-                self.next_action = "next"
-            case "next":  # 下一题
-                # 还原界面
-                self.judge_button_right.setStyleSheet(style.button_green)
-                self.judgment_container.setStyleSheet("border-top: 2px solid #E5E5E5")
-                self.answer_result.setParent(None)
-                self.answer_result.deleteLater()
-                self.judgment_layout.addWidget(self.judge_button_left, 0, 0)
+            self.next_action = "next"
+        elif self.next_action == "next":  # 下一题
+            # 还原界面
+            self.judgment_container.setStyleSheet("border-top: 2px solid #E5E5E5")
+            self.answer_result.setParent(None)
+            self.answer_result.deleteLater()
+            self.judgment_layout.addWidget(self.skip_button, 0, 0)
+            self.continue_button.setText("检查")
+            self.continue_button.setStyleSheet(style.button_green)
 
-                # 切换题目
-                self.challenge_index += 1
-                if self.challenge_index >= len(self.challenges):
-                    self.clear_challenge()
-                    self.se_finished.play()
-                    self.next_action = "finish"
-                    return  # TODO: 结束单元
-                self.update_challenge()
-                self.judge_button_right.setEnabled(False)
+            # 切换题目
+            self.challenge_index += 1
+            if self.challenge_index >= len(self.challenges):
+                self.clear_challenge()
+                self.se_finished.play()
+                self.next_action = "finish"
+                return  # TODO: 结束单元
+            self.update_challenge()
+            self.continue_button.setEnabled(False)
 
-                self.next_action = "check"
-            case "finish":
-                # TODO: 结算页面
-                ...
-            case other:
-                raise ValueError(f"Unknown action {other}")
+            self.next_action = "check"
+        elif self.next_action == "finish":  # 结算
+            # TODO: 结算页面
+            ...
+        else:
+            raise ValueError(f"Unknown action {self.next_action}")
 
 
 if __name__ == "__main__":
     application = QApplication()
     application.styleHints().setColorScheme(Qt.ColorScheme.Light)
-    # 字体
+
     families = QFontDatabase.applicationFontFamilies(
         QFontDatabase.addApplicationFont(
             r"d:\MyPC\Advanced\Code\Python\Projects\openlingo\resources\fonts\DINRound.otf"
         )
     )
-    duo_font = f"{families[0]}, " if families else ""
-    font = QFont(f"{duo_font}Microsoft YaHei UI, sans-serif")
+    font = QFont(f"{f'{families[0]}, ' if families else ''}Microsoft YaHei UI, sans-serif")
     application.setFont(font)
 
     window = QMainWindow()
