@@ -6,7 +6,7 @@ from pathlib import Path
 from typing import Literal, Self
 
 from PySide6.QtCore import QEasingCurve, QSize, Qt, QTimer, QUrl, Signal
-from PySide6.QtGui import QColor, QFont, QFontDatabase, QPainter, QPaintEvent, QPixmap
+from PySide6.QtGui import QColor, QFont, QFontDatabase, QKeySequence, QPainter, QPaintEvent, QPixmap, QShortcut
 from PySide6.QtMultimedia import QSoundEffect
 from PySide6.QtWidgets import (
     QApplication,
@@ -76,6 +76,7 @@ class SingleChoice(AbstractChallenge):
             self.option_buttons.append(button)
             self.button_group.addButton(button, i)
             layout.addWidget(button, 0, i)
+            QShortcut(QKeySequence(str(i + 1)), self, button.click)  # 快捷键绑定
 
         self.button_group.idClicked.connect(self.on_option_selected)
 
@@ -400,6 +401,7 @@ class ChallengeUI(QWidget):
         self.continue_button.setCursor(Qt.PointingHandCursor)
         self.continue_button.setStyleSheet(style.button_green)
         self.continue_button.setEnabled(False)  # 默认禁用
+        QShortcut(QKeySequence("Return"), self, self.continue_button.click)  # 快捷键绑定
 
         ### 提交逻辑
         self.next_action: Literal["check", "next", "finish"] = "check"
