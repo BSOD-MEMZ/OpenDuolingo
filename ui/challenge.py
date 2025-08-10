@@ -41,9 +41,10 @@ class AbstractChallenge(QWidget, metaclass=MetaQObjectABC):
 
     # 必须在答案可用时发出该信号
     optionSelected = Signal(bool)
+    skippable: bool = False
 
     @abstractmethod
-    def check_answer(self) -> tuple[bool, str]:
+    def check_answer(self, skip: bool = False) -> tuple[bool, str]:
         """检查答案
 
         Returns:
@@ -55,7 +56,7 @@ class AbstractChallenge(QWidget, metaclass=MetaQObjectABC):
 class SingleChoice(AbstractChallenge):
     """单项选择"""
 
-    def __init__(self, options: list[str], answer: int):
+    def __init__(self, options: list[str], answer: int, skippable: bool = False):
         super().__init__()
 
         self.setStyleSheet(style.button_option)
@@ -85,14 +86,26 @@ class SingleChoice(AbstractChallenge):
         assert answer <= len(options)
         self.answer = answer
 
+        # 跳过
+        if skippable:
+            self.skippable = True
+
     def on_option_selected(self, id: int):
         """选中事件"""
         print(f"Option {self.option_texts[id]} ({id=}) is selected")
         self.selected = id
         self.optionSelected.emit(True)
 
-    def check_answer(self):
+    def check_answer(self, skip: bool = False):
         """检查答案"""
+        # 跳过
+        if skip:
+            print(f"Skipping... (answer: {self.answer})")
+            for button in self.option_buttons:
+                button.setEnabled(False)
+            return False, self.option_texts[self.answer]
+
+        # 检查
         print(f"Checking... (selected: {self.selected}, answer: {self.answer}) | ", end="")
         result = self.selected == self.answer
         if result:
@@ -109,8 +122,10 @@ class SingleChoice(AbstractChallenge):
 
 
 class SingleCharChoice(SingleChoice):
-    def __init__(self, options: list[str], answer: int):
-        super().__init__(options, answer)
+    """单项选择，适用于单个字符的选项"""
+
+    def __init__(self, options: list[str], answer: int, skippable: bool = False):
+        super().__init__(options, answer, skippable)
 
         style_sheet = style.button_option.replace("/* font-size: 72px; */", "font-size: 72px;")
         self.setStyleSheet(style_sheet)
@@ -124,6 +139,7 @@ class ChallengeData:
     question: str
     options: list[str]
     answer: int
+    skippable: bool = False
 
     @classmethod
     def from_json(cls, path: str | Path) -> list[Self]:
@@ -131,16 +147,16 @@ class ChallengeData:
         try:
             with open(path, "r", encoding="utf-8") as f:
                 raw = json.load(f)
-            return [cls(**item) for item in raw]
+            return [cls(**item) for item in raw]  # 根据解析到的题目数据分别创建题目
         except Exception as e:
             raise ValueError(f"Error phasing data: {e}") from e
 
     def create_challenge(self) -> AbstractChallenge:
         match self.type:
             case "single":
-                return SingleChoice(options=self.options, answer=self.answer)
+                return SingleChoice(self.options, self.answer, self.skippable)
             case "single-char":
-                return SingleCharChoice(options=self.options, answer=self.answer)
+                return SingleCharChoice(self.options, self.answer, self.skippable)
             case other:
                 raise ValueError(f"Unknown challenge type {other}")
 
@@ -486,8 +502,9 @@ class ChallengeUI(QWidget):
         self.continue_button.setEnabled(False)  # 默认禁用
         QShortcut(QKeySequence("Return"), self, self.continue_button.click)  # 快捷键绑定
 
-        ### 提交逻辑
+        ### 按键逻辑
         self.next_action: Literal["check", "next", "finish"] = "check"
+        self.skip_button.clicked.connect(lambda: self.next("skip"))
         self.continue_button.clicked.connect(self.next)
 
         continue_button_container = AlignedContainer(self.continue_button, QHBoxLayout, Qt.AlignmentFlag.AlignRight)
@@ -530,10 +547,21 @@ class ChallengeUI(QWidget):
         self.challenge_layout.addWidget(self.challenge_question)
         self.challenge_layout.addWidget(self.challenge)
 
-    def next(self):
+    def next(self, action: Literal["check", "skip", "next", "finish"] | None = None):
         """下一步操作（检查答案/下一题）"""
-        if self.next_action == "check":  # 检查答案
-            is_correct, answer = self.challenge.check_answer()
+        skip = False
+        # 使用传入的操作则覆盖下一步操作
+        if action:
+            if action == "skip":
+                next_action = "check"
+                skip = True
+            else:
+                next_action = action
+        else:
+            next_action = self.next_action
+
+        if next_action == "check":  # 检查答案
+            is_correct, answer = self.challenge.check_answer(skip)
 
             # 播放音效
             if is_correct:
@@ -553,14 +581,14 @@ class ChallengeUI(QWidget):
             self.progress_bar.setValue(self.challenge_index + 1)
             self.continue_button.setText("继续")
             self.continue_button.setStyleSheet(style.button_green if is_correct else style.button_red)
+            self.continue_button.setEnabled(True)
 
             self.next_action = "next"
-        elif self.next_action == "next":  # 下一题
+        elif next_action == "next":  # 下一题
             # 还原界面
             self.judgment_container.setStyleSheet("border-top: 2px solid #E5E5E5")
             self.answer_result.setParent(None)
             self.answer_result.deleteLater()
-            self.judgment_layout.addWidget(self.skip_button, 0, 0)
             self.continue_button.setText("检查")
             self.continue_button.setStyleSheet(style.button_green)
 
@@ -574,12 +602,16 @@ class ChallengeUI(QWidget):
             self.update_challenge()
             self.continue_button.setEnabled(False)
 
+            # 显示跳过
+            if self.challenge.skippable:
+                self.skip_button.setVisible(True)
+
             self.next_action = "check"
-        elif self.next_action == "finish":  # 结算
+        elif next_action == "finish":  # 结算
             # TODO: 结算页面
             ...
         else:
-            raise ValueError(f"Unknown action {self.next_action}")
+            raise ValueError(f"Unknown action {next_action}")
 
 
 if __name__ == "__main__":

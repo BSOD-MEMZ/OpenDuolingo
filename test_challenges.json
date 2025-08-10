@@ -19,7 +19,8 @@
             "紫框",
             "白框"
         ],
-        "answer": 2
+        "answer": 2,
+        "skippable": true
     },
     {
         "type": "single",
